@@ -44,7 +44,7 @@ jobs:
       - name: Export artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: rskj-core-${{ github.head_ref }}.zip
+          name: rskj-core-${{ github.head_ref }}
           path: rskj-core/build/libs/
           if-no-files-found: error
 
