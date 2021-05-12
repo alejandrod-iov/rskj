@@ -29,7 +29,7 @@ jobs:
             sha256sum ${i} >> SHA256SUMS;
           done
           cat SHA256SUMS
-        run: echo ::set-output name=sha256sum::$(cat SHA256SUMS)
+          echo ::set-output name=sha256sum::$(cat SHA256SUMS)
 
       - name: Export reproducible
         run: |
