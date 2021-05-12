@@ -28,7 +28,7 @@ jobs:
       - name: Calculate hashes      
         working-directory: rskj-core/build/libs
         run: |
-          for i in `ls | grep -all.jar`; do
+          for i in `ls | grep all.jar`; do
             sha256sum ${i} >> SHA256SUMS;
           done
           cat rskj-core/build/libs/SHA256SUMS
