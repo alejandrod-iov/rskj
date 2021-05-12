@@ -30,7 +30,7 @@ jobs:
           done
           cat SHA256SUMS
       
-      - name: Get version
+      - name: Get SHA256SUMS
         id: vars
         run: echo ::set-output name=sha256sum::$(cat SHA256SUMS)
 
