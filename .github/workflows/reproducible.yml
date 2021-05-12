@@ -4,8 +4,8 @@ on: [pull_request]
 jobs:
   jar-artifact-and-hash:
     runs-on: ubuntu-20.04
-    container: openjdk:8-jdk-slim-buster
-      image: 
+    container: 
+      image: openjdk:8-jdk-slim-buster
     steps:
       - name: Install packages
         run: |
