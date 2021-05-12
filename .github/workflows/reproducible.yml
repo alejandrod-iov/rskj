@@ -28,6 +28,7 @@ jobs:
             const comment = `Reproducible builds allow you to match our provided binary with the source code you 
             find on the repository. As more people reproduce the code, the more sure you can be 
             that the code has not been tampered with.
+            
             Want to reproduce? Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the 
             community on this PR!`
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
