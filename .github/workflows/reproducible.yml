@@ -4,10 +4,12 @@ on: [pull_request]
 jobs:
   jar-artifact-and-hash:
     runs-on: ubuntu-20.04
+    container:
+
     steps:
       - name: Install packages
         run: |
-          apt-get update -y && apt-get install -y git curl gnupg openjdk-8-jdk
+          apt-get update -y && apt-get install -y openjdk-8-jdk git curl gnupg
 
       - name: Checkout code
         uses: actions/checkout@v2
