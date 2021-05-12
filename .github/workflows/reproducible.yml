@@ -30,8 +30,9 @@ jobs:
           done
           cat SHA256SUMS
       
-      - name: Get SHA256SUMS
+      - name: Set SHA256SUMS output to a variable
         id: vars
+        working-directory: rskj-core/build/libs
         run: echo ::set-output name=sha256sum::$(cat SHA256SUMS)
 
       - name: Export reproducible
