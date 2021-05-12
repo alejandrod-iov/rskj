@@ -45,5 +45,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const output = `Reproducible builds allow you to match our provided binary with the source code you 
+              find on the repository. As more people reproduce the code, the more sure you can be 
+              that the code has not been tampered with.
+              Want to reproduce? Follow this guide. Share your results with the rest of the 
+              community on this PR!`;
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
             github.issues.createComment({ issue_number, owner, repo, body: "Follow this **[link](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})** to access the Github Action execution with the reproducible" });
