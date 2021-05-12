@@ -4,19 +4,13 @@ on: [pull_request]
 jobs:
   jar-artifact-and-hash:
     runs-on: ubuntu-20.04
-    container: 
-      image: openjdk@sha256:335627a2118556b3f412287e08ac7febb8ecc46325dc6b3570db56f32d33938f
     steps:
       - name: Install packages
         run: |
-          apt-get update -y && apt-get install -y git curl gnupg
+          apt-get update -y && apt-get install -y git curl gnupg openjdk-8-jdk
 
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Set rskj version
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - name: Download Release key
         run: |
@@ -33,15 +27,12 @@ jobs:
       - name: Calculate hashes      
         working-directory: rskj-core/build/libs
         run: |
-          for i in `ls | grep -v javadoc`; do
-            sha256sum ${i} >> SHA256SUMS;
-          done
-
-      - name: Print hashes
-        run: |
+          echo "Pushing hash result to sha256SUMS file."
+          ls | grep all.jar | sha256sum ${i} >> SHA256SUMS;
+          echo "SHA25SUM hash file content: " 
           cat rskj-core/build/libs/SHA256SUMS
 
-      - name: Export artifacts
+      - name: Export fatjar artifact
         uses: actions/upload-artifact@v2
         with:
           name: rskj-core-${{ github.head_ref }}
@@ -50,7 +41,6 @@ jobs:
 
       - name: 'Comment PR'
         uses: actions/github-script@0.3.0
-        if: github.event_name == 'pull_request'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
