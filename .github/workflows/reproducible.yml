@@ -31,7 +31,6 @@ jobs:
                         
             **Want the jar and sha256sum:?**: Follow this [link](). Share your results with the rest of the 
             community on this PR!
-            **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the 
-            community on this PR!`
+            **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the community on this PR!`
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
             github.issues.createComment({ issue_number, owner, repo, body: comment });
