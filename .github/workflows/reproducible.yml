@@ -29,13 +29,11 @@ jobs:
             sha256sum ${i} >> SHA256SUMS;
           done
           cat SHA256SUMS
+        run: echo ::set-output name=sha256sum::$(cat SHA256SUMS)
 
-      - name: Export artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: rskj-core-${{ github.head_ref }}
-          path: rskj-core/build/libs/
-          if-no-files-found: error
+      - name: Export reproducible
+        run: |
+          echo "Here we will push to s3 bucket"
 
       - name: 'Comment PR'
         uses: actions/github-script@0.3.0
