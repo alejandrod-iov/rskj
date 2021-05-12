@@ -4,12 +4,12 @@ on: [pull_request]
 jobs:
   jar-artifact-and-hash:
     runs-on: ubuntu-20.04
-    container: 
-      image: openjdk@sha256:335627a2118556b3f412287e08ac7febb8ecc46325dc6b3570db56f32d33938f
+    container: openjdk:8-jdk-slim-buster
+      image: 
     steps:
       - name: Install packages
         run: |
-          apt-get update -y && apt-get install -y openjdk-8-jdk git curl gnupg
+          apt-get update -y && apt-get install -y git curl gnupg
       - name: Checkout code
         uses: actions/checkout@v2
         
