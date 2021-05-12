@@ -28,7 +28,6 @@ jobs:
           for i in `ls | grep -E 'rskj-core.*all*.jar'`; do
             sha256sum ${i} >> SHA256SUMS;
           done
-          cat SHA256SUMS
       
       - name: Set SHA256SUMS output to a variable
         id: vars
@@ -48,8 +47,8 @@ jobs:
             find on the repository. As more people reproduce the code, the more sure you can be 
             that the code has not been tampered with.
 
-            ${{ steps.vars.outputs.sha256sum }}            
-            **Want the binary and sha256 sum:?**: Follow this [link]().
-            **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the community on this PR!`
+            * **Want the binary and sha256 sum:?**: Follow this [link]().
+            * **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the community on this PR!
+            * **SHA256SUM**: ${{ steps.vars.outputs.sha256sum }}`
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
             github.issues.createComment({ issue_number, owner, repo, body: comment });
