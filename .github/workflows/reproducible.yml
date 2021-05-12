@@ -18,7 +18,24 @@ jobs:
           gpg --keyserver https://secchannel.rsk.co/release.asc --recv-keys 1A92D8942171AFA951A857365DECF4415E3B8FA4
           gpg --verify --output SHA256SUMS SHA256SUMS.asc && sha256sum --check SHA256SUMS
 
+      - name: Build rskj
+        run: |
+          ./configure.sh && ./gradlew --no-daemon clean build -x test
 
+      - name: Calculate hashes      
+        working-directory: rskj-core/build/libs
+        run: |
+          for i in `ls | grep -E 'rskj-core.*all*.jar'`; do
+            sha256sum ${i} >> SHA256SUMS;
+          done
+          cat SHA256SUMS
+
+      - name: Export artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: rskj-core-${{ github.head_ref }}
+          path: rskj-core/build/libs/
+          if-no-files-found: error
 
       - name: 'Comment PR'
         uses: actions/github-script@0.3.0
@@ -29,9 +46,7 @@ jobs:
             find on the repository. As more people reproduce the code, the more sure you can be 
             that the code has not been tampered with.
             
-            **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the 
-            community on this PR!
-            **Want the jar and sha256sum:?**: Follow this [link](). Share your results with the rest of the 
-            community on this PR!`
+            **Want the jar and sha256sum:?**: Follow this [link]().
+            **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the community on this PR!`
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
             github.issues.createComment({ issue_number, owner, repo, body: comment });
