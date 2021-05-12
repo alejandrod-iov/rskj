@@ -42,5 +42,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const comment = `Follow this **[link](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})** to access the Github Action execution with the reproducible`
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
-            github.issues.createComment({ issue_number, owner, repo, body: "Follow this **[link](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})** to access the Github Action execution with the reproducible" });
+            github.issues.createComment({ issue_number, owner, repo, body: comment });
