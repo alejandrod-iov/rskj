@@ -28,12 +28,9 @@ jobs:
       - name: Calculate hashes      
         working-directory: rskj-core/build/libs
         run: |
-          for i in `ls | grep -v javadoc`; do
+          for i in `ls | grep -all.jar`; do
             sha256sum ${i} >> SHA256SUMS;
           done
-
-      - name: Print hashes
-        run: |
           cat rskj-core/build/libs/SHA256SUMS
 
       - name: Export artifacts
