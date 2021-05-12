@@ -25,12 +25,12 @@ jobs:
         run: |
           ./configure.sh && ./gradlew --no-daemon clean build -x test
 
-      - name: Calculate hashes      
+      - name: Calculate and print hashes      
         working-directory: rskj-core/build/libs
         run: |
-          echo "Pushing hash result to sha256SUMS file."
-          ls | grep all.jar | sha256sum ${i} >> SHA256SUMS;
-          echo "SHA25SUM hash file content: " 
+          for i in `ls | grep -v -all.jar`; do
+            sha256sum ${i} >> SHA256SUMS;
+          done
           cat rskj-core/build/libs/SHA256SUMS
 
       - name: Export fatjar artifact
