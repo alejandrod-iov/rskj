@@ -29,14 +29,12 @@ jobs:
             sha256sum ${i} >> SHA256SUMS;
           done
       
-      - name: Set SHA256SUMS output to a variable
+      - name: Declare variables
         id: vars
         working-directory: rskj-core/build/libs
-        run: echo ::set-output name=sha256sum::$(cat SHA256SUMS)
-
-      - name: Set rskj version
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        run: |
+          echo ::set-output name=sha256sum::$(cat SHA256SUMS)
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -54,8 +52,7 @@ jobs:
       
       - name: Deploy artifacts to S3
         run: |
-          aws s3 cp SHA256SUMS s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/SHA256SUMS-${GITHUB_SHA}
-
+          aws s3 cp SHA256SUMS s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/SHA256SUMS-${{ steps.vars.outputs.branch }}
 
       - name: 'Comment PR'
         uses: actions/github-script@0.3.0
