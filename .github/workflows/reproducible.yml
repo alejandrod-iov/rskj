@@ -61,8 +61,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const comment = `Reproducible builds allow you to match our provided binary with the source code you 
-            find on the repository. As more people reproduce the code, the more sure you can be 
+            const comment = `Reproducible builds allow you to match our provided binary with the source code you \
+            find on the repository. As more people reproduce the code, the more sure you can be \
             that the code has not been tampered with.
 
             * **Want the binary and sha256 sum:?**: Follow this [link for the reproducible](https://artifacts.rsk.co/downloads/${{ steps.vars.outputs.sha_short }}/${{ steps.vars.outputs.fatjar_name }}) \
