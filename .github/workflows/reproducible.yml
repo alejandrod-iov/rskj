@@ -18,7 +18,11 @@ jobs:
           gpg --keyserver https://secchannel.rsk.co/release.asc --recv-keys 1A92D8942171AFA951A857365DECF4415E3B8FA4
           gpg --verify --output SHA256SUMS SHA256SUMS.asc && sha256sum --check SHA256SUMS
 
-      
+ 
+      - name: Build rskj
+        run: |
+          ./configure.sh && ./gradlew --no-daemon clean build -x test
+
       - name: Declare some variables
         id: vars
         working-directory: rskj-core/build/libs
@@ -27,15 +31,10 @@ jobs:
           echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
           echo "::set-output name=fatjar_name::$(ls | grep all)"
 
-      - name: Build rskj
-        run: |
-          ./configure.sh && ./gradlew --no-daemon clean build -x test
-
       - name: Calculate hashes      
         working-directory: rskj-core/build/libs
         run: sha256sum ${{ steps.vars.outputs.fatjar_name }}  > SHA256SUMS;
-
-      
+ 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
