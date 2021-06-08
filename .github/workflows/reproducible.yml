@@ -31,7 +31,6 @@ jobs:
         working-directory: rskj-core/build/libs
         run: |
           echo ::set-output name=sha256sum::$(cat SHA256SUMS)
-          echo "${GITHUB_SHA}"
           echo "::set-output name=fatjar_name::$(echo *-all.jar)" 
 
 
