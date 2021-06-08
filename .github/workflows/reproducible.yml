@@ -31,7 +31,7 @@ jobs:
         working-directory: rskj-core/build/libs
         run: |
           echo ::set-output name=sha256sum::$(cat SHA256SUMS)
-          echo "::set-output name=sha_short::$(GITHUB_SHA)"
+          echo "${GITHUB_SHA}"
           echo "::set-output name=fatjar_name::$(echo *-all.jar)" 
 
 
@@ -51,8 +51,8 @@ jobs:
       
       - name: Deploy artifacts to S3
         run: |
-          aws s3 cp rskj-core/build/libs/SHA256SUMS s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${{ steps.vars.outputs.sha_short }}/ --acl public-read
-          aws s3 cp rskj-core/build/libs/${{ steps.vars.outputs.fatjar_name }} s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${{ steps.vars.outputs.sha_short }}/ --acl public-read
+          aws s3 cp rskj-core/build/libs/SHA256SUMS s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${GITHUB_SHA }/ --acl public-read
+          aws s3 cp rskj-core/build/libs/${{ steps.vars.outputs.fatjar_name }} s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${GITHUB_SHA }/ --acl public-read
 
       - name: Comment PR
         uses: actions/github-script@0.3.0
@@ -63,8 +63,8 @@ jobs:
             find on the repository. As more people reproduce the code, the more sure you can be \
             that the code has not been tampered with.
 
-            * **Want the binary and sha256 sum:?**: Follow this [link for the reproducible](https://artifacts.rsk.co/downloads/${{ steps.vars.outputs.sha_short }}/${{ steps.vars.outputs.fatjar_name }}) \
-            and this [link for the SHA256SUMS](https://artifacts.rsk.co/downloads/${{ steps.vars.outputs.sha_short }}/SHA256SUMS)
+            * **Want the binary and sha256 sum:?**: Follow this [link for the reproducible](https://artifacts.rsk.co/downloads/${GITHUB_SHA }/${{ steps.vars.outputs.fatjar_name }}) \
+            and this [link for the SHA256SUMS](https://artifacts.rsk.co/downloads/${GITHUB_SHA }/SHA256SUMS)
             * **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the community on this PR!
             * **SHA256SUM**: \`${{ steps.vars.outputs.sha256sum }}\``
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
