@@ -22,17 +22,13 @@ jobs:
         run: |
           ./configure.sh && ./gradlew --no-daemon clean build -x test
 
-      - name: Calculate hashes      
-        working-directory: rskj-core/build/libs
-        run: sha256sum ${{ steps.vars.outputs.fatjar_name }}  > SHA256SUMS;
-
-      - name: Declare some variables
+      - name: Set variable and SHA256SUMS file
         id: vars
         working-directory: rskj-core/build/libs
-        run: |
+        run: |       
+          echo "::set-output name=fatjar_name::$(echo *-all.jar)"
+          sha256sum ${{ steps.vars.outputs.fatjar_name }}  > SHA256SUMS;
           echo ::set-output name=sha256sum::$(cat SHA256SUMS)
-          echo "::set-output name=fatjar_name::$(echo *-all.jar)" 
-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
