@@ -63,8 +63,8 @@ jobs:
             find on the repository. As more people reproduce the code, the more sure you can be \
             that the code has not been tampered with.
 
-            * **Want the binary and sha256 sum:?**: Follow this [link for the reproducible](https://artifacts.rsk.co/downloads/${GITHUB_SHA}/${{ steps.vars.outputs.fatjar_name }}) \
-            and this [link for the SHA256SUMS](https://artifacts.rsk.co/downloads/${GITHUB_SHA}/SHA256SUMS)
+            * **Want the binary and sha256 sum:?**: Follow this [link for the reproducible](https://artifacts.rsk.co/downloads/${{ env.GITHUB_SHA }}/${{ steps.vars.outputs.fatjar_name }}) \
+            and this [link for the SHA256SUMS](https://artifacts.rsk.co/downloads/${{ env.GITHUB_SHA }}/SHA256SUMS)
             * **Want to reproduce?**: Follow this [guide](https://developers.rsk.co/rsk/node/reproducible/). Share your results with the rest of the community on this PR!
             * **SHA256SUM**: \`${{ steps.vars.outputs.sha256sum }}\``
             const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
