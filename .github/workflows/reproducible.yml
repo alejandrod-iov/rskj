@@ -47,8 +47,8 @@ jobs:
       
       - name: Deploy artifacts to S3
         run: |
-          aws s3 cp rskj-core/build/libs/SHA256SUMS s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${GITHUB_SHA}/ --acl public-read
-          aws s3 cp rskj-core/build/libs/${{ steps.vars.outputs.fatjar_name }} s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${GITHUB_SHA}/ --acl public-read
+          aws s3 cp rskj-core/build/libs/SHA256SUMS s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${{ github.sha }}/ --acl public-read
+          aws s3 cp rskj-core/build/libs/${{ steps.vars.outputs.fatjar_name }} s3://${{ secrets.REPRODUCIBLE_S3_BUCKET }}/downloads/${{ github.sha }}/ --acl public-read
 
       - name: Comment PR
         uses: actions/github-script@0.3.0
