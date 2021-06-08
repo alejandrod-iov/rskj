@@ -28,7 +28,6 @@ jobs:
         run: |       
           echo "::set-output name=fatjar_name::$(echo *-all.jar)"
           sha256sum $(echo *-all.jar)  > ./SHA256SUMS;
-          sha256sum $(echo *-all.jar)
           echo ::set-output name=sha256sum::$(cat SHA256SUMS)
 
       - name: Configure AWS credentials
