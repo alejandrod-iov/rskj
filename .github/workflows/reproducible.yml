@@ -5,7 +5,7 @@ jobs:
   jar-artifact-and-hash:
     runs-on: ubuntu-20.04
     container: 
-      image: openjdk:8-jdk-slim-buster
+      image: openjdk@sha256:335627a2118556b3f412287e08ac7febb8ecc46325dc6b3570db56f32d33938f
     steps:
       - name: Install packages
         run: |
