@@ -12,6 +12,8 @@ jobs:
           apt-get update -y && apt-get install -y git curl gnupg
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Verify files integrity
         run: |
