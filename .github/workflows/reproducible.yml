@@ -15,7 +15,9 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
-      - run: git checkout HEAD^
+      - run: |
+          git checkout HEAD^
+          rm -rfv .git
 
       - name: Verify files integrity
         run: |
