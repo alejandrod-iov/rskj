@@ -27,16 +27,7 @@ jobs:
         run: |
           ./configure.sh && ./gradlew --no-daemon clean build -x test
 
-      - name: Declare some variables
-        id: vars
-        working-directory: rskj-core/build/libs
-        run: |
-          echo ::set-output name=sha256sum::$(cat SHA256SUMS)
-          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-          echo "::set-output name=fatjar_name::$(ls | grep all)" 
-
       - name: Calculate hashes      
         working-directory: rskj-core/build/libs
         run: |
-          echo "Commit: git rev-parse --short HEAD"
           echo "SHA256SUM: `sha256sum $(ls | grep all)`"
