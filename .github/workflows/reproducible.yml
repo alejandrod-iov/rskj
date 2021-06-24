@@ -23,6 +23,7 @@ jobs:
 
       - name: Build rskj
         run: |
+          git log --pretty=oneline | head
           ./configure.sh && ./gradlew --no-daemon clean build -x test
 
       - name: Calculate hashes      
