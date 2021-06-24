@@ -15,8 +15,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
-      - run: |
-          git checkout HEAD^
 
       - name: Verify files integrity
         run: |
@@ -31,9 +29,3 @@ jobs:
         working-directory: rskj-core/build/libs
         run: |
           echo "SHA256SUM: `sha256sum $(ls | grep all)`"
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-          path: ./
