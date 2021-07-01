@@ -5,28 +5,27 @@ jobs:
   jar-artifact-and-hash:
     runs-on: ubuntu-20.04
     container: 
-      image: openjdk@sha256:335627a2118556b3f412287e08ac7febb8ecc46325dc6b3570db56f32d33938f
+      image: openjdk:8-jdk-slim-buster
     steps:
       - name: Install packages
         run: |
-          apt-get update -y && apt-get install -y git curl gnupg
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
+          apt-get update -y && apt-get install -y git curl gnupg && rm -rf /var/lib/apt/lists/* && apt-get autoremove -y &&  apt-get clean
 
       - name: Verify files integrity
         run: |
           gpg --keyserver https://secchannel.rsk.co/release.asc --recv-keys 1A92D8942171AFA951A857365DECF4415E3B8FA4
           gpg --verify --output SHA256SUMS SHA256SUMS.asc && sha256sum --check SHA256SUMS
 
+      - name: Checkout code
+        run: git clone --single-branch --depth 1 --branch reproducible_test https://github.com/alejandrod-iov/rskj.git /code/rskj
+
       - name: Build rskj
+        working-directory: /code/rskj
         run: |
           git log | head
           ./configure.sh && ./gradlew --no-daemon clean build -x test
 
       - name: Calculate hashes      
-        working-directory: rskj-core/build/libs
+        working-directory: /code/rskj/rskj-core/build/libs
         run: |
           echo "SHA256SUM: `sha256sum $(ls | grep all)`"
